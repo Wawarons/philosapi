@@ -15,6 +15,8 @@ const limiter = rateLimit({
     max: 100, // limit each IP to 100 requests
     message: 'Too many requests from this IP, please try again later.',
 });
+const path = require('path')
+app.use('/api/images', express.static(path.join(__dirname, 'images')))
 
 
 app.use(limiter);
@@ -33,7 +35,6 @@ app.use('/api/works', worksRoutes);
 app.use('/api/citations', citationsRoutes);
 app.use('/api/stream_of_thought', streamOfThoughtRoutes);
 app.use('/api/periods', periodsRoutes);
-app.use('/api/images', express.static('/api/images'));
 
 app.listen(PORT, (error) => {
     if (!error) {
