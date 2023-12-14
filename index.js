@@ -1,5 +1,4 @@
 const express = require('express');
-const db = require('./db');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const philosopherRoutes = require('./routes/philosophers');
@@ -7,7 +6,6 @@ const worksRoutes = require('./routes/works');
 const citationsRoutes = require('./routes/citations');
 const streamOfThoughtRoutes = require('./routes/stream_of_thought');
 const periodsRoutes = require('./routes/periods');
-const {executeQuery} = require("./routes/utils");
 
 const app = express();
 const PORT = 3000;
