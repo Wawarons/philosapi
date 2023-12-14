@@ -33,7 +33,7 @@ app.use('/api/works', worksRoutes);
 app.use('/api/citations', citationsRoutes);
 app.use('/api/stream_of_thought', streamOfThoughtRoutes);
 app.use('/api/periods', periodsRoutes);
-app.use('/api/images', express.static('./images'));
+app.use('/api/images', express.static('/api/images'));
 
 app.listen(PORT, (error) => {
     if (!error) {
