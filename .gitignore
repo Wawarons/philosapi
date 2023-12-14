@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=webstorm+all,node,dotenv
 
 ### dotenv ###
-.env
+api/.env
 
 ### Node ###
 # Logs

@@ -21,12 +21,19 @@ app.use(limiter);
 app.use(cors());
 app.use(express.json());
 
-app.use('/philosophers', philosopherRoutes);
-app.use('/works', worksRoutes);
-app.use('/citations', citationsRoutes);
-app.use('/stream_of_thought', streamOfThoughtRoutes);
-app.use('/periods', periodsRoutes);
-app.use('/images', express.static('./images'));
+app.get('/api', (req, res,) => {
+    res.status(200).send({
+        title: 'Welcome to Philosapi',
+        description: 'Philosapi contains informations about philosophers, their works, stream of thoughts and citations.'
+    })
+});
+
+app.use('/api/philosophers', philosopherRoutes);
+app.use('/api/works', worksRoutes);
+app.use('/api/citations', citationsRoutes);
+app.use('/api/stream_of_thought', streamOfThoughtRoutes);
+app.use('/api/periods', periodsRoutes);
+app.use('/api/images', express.static('./images'));
 
 app.listen(PORT, (error) => {
     if (!error) {
