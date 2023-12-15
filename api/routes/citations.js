@@ -5,24 +5,17 @@ const router = express.Router();
 
 //Toutes les citations
 router.get('/', (req, res) => {
+    const { text, limit, offset} = req.query;
     let sql =
         "SELECT citation.*, philosopher.name AS philosopher " +
         "FROM citation JOIN philosopher " +
-        "ON philosopher.id = citation.philosopher_id";
-    const {limit, offset} = req.query;
+        "ON philosopher.id = citation.philosopher_id\n";
 
-    executeQuery(sql, [], res, limit, offset);
-});
+    if(text) {
+        sql += "WHERE citation.text ILIKE $1 || '%'";
+    }
 
-router.get('/:id', (req, res) => {
-    const {id} = req.params;
-    let sql =
-        "SELECT citation.*, philosopher.name AS philosopher " +
-        "FROM citation JOIN philosopher " +
-        "ON philosopher.id = citation.philosopher_id\n" +
-        "WHERE citation.id = CAST($1 AS INTEGER)";
-
-    executeQuery(sql, [id], res);
+    executeQuery(sql, text ? [text]:[], res, limit, offset);
 });
 
 router.get('/random', (req, res) => {
@@ -51,6 +44,22 @@ router.get('/random', (req, res) => {
 })
 
 //Citation par philosophe
+router.get('/philosophers/:id', (req, res) => {
+    let {id} = req.params;
+
+    const sql =
+        "SELECT\n citation.*," +
+        "    philosopher.name AS philosopher_name\n" +
+        "FROM\n" +
+        "    citation\n" +
+        "JOIN\n" +
+        "    philosopher ON citation.philosopher_id = philosopher.id\n" +
+        "WHERE philosopher.id = CAST($1 AS INTEGER)"
+
+    executeQuery(sql, [id], res);
+})
+
+
 router.get('/philosophers', (req, res) => {
     let {name} = req.query;
 
@@ -75,20 +84,14 @@ router.get('/philosophers', (req, res) => {
     executeQuery(sql, [name], res);
 })
 
-//Citation par philosophe
-router.get('/philosophers/:id', (req, res) => {
-    let {id} = req.params;
-
-    const sql =
-        "SELECT\n citation.*," +
-        "    philosopher.name AS philosopher_name\n" +
-        "FROM\n" +
-        "    citation\n" +
-        "JOIN\n" +
-        "    philosopher ON citation.philosopher_id = philosopher.id\n" +
-        "WHERE philosopher.id = CAST($1 AS INTEGER)"
+router.get('/:id', (req, res) => {
+    const {id} = req.params;
+    let sql =
+        "SELECT citation.*, philosopher.name AS philosopher " +
+        "FROM citation JOIN philosopher " +
+        "ON philosopher.id = citation.philosopher_id\n" +
+        "WHERE citation.id = CAST($1 AS INTEGER)";
 
     executeQuery(sql, [id], res);
-})
-
+});
 module.exports = router;

@@ -117,7 +117,7 @@ Philosapi is a powerful API that provides access to a repository of philosophica
 **Description:** Get a list of philosophers based on a specific stream of thought.
 
 **Parameters:**
-- `stream_of_thought_id` (required): The ID of the stream of thought.
+- `sot` (required): The name of the stream of thought.
 
 **Response:**
 - `200 OK`: Successful response with an array of philosophers.
@@ -180,14 +180,12 @@ Philosapi is a powerful API that provides access to a repository of philosophica
 
 #### Search Philosophers by Period
 
-**Endpoint:** `GET /philosophers
-
-/period`
+**Endpoint:** `GET /philosophers/periods`
 
 **Description:** Get a list of philosophers based on a specific period.
 
 **Parameters:**
-- `period_id` (required): The ID of the period.
+- `period` (required): The name of the period.
 
 **Response:**
 - `200 OK`: Successful response with an array of philosophers.
@@ -310,7 +308,7 @@ Philosapi is a powerful API that provides access to a repository of philosophica
 **Description:** Get a list of works by a specific philosopher.
 
 **Parameters:**
-- `philosopher_name` (required): The name of the philosopher.
+- `name` (required): The name of the philosopher.
 
 **Response:**
 - `200 OK`: Successful response with an array of works.
@@ -421,7 +419,7 @@ Philosapi is a powerful API that provides access to a repository of philosophica
 **Description:** Get a list of citations by a specific philosopher's name.
 
 **Parameters:**
-- `philosopher_name` (required): The name of the philosopher.
+- `name` (required): The name of the philosopher.
 
 **Response:**
 - `200 OK`: Successful response with an array of citations.
