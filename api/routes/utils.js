@@ -4,14 +4,14 @@ function executeQuery (sql, params, res, limit = null, offset = null) {
 
     if (limit && isNaN(limit)) {
         return res.status(400).json({error: 'Invalid limit parameter'});
-    } else if (!isNaN(limit)) {
+    } else if (!isNaN(limit) && limit) {
         sql += ` LIMIT $${params.length + 1}`;
         params.push(limit);
     }
 
     if (offset && isNaN(offset)) {
         return res.status(400).json({error: 'Invalid offset parameter'});
-    } else if (!isNaN(offset)) {
+    } else if (!isNaN(offset) && offset) {
         sql += ` OFFSET $${params.length + 1}`;
         params.push(offset);
     }

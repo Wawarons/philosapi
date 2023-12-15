@@ -17,6 +17,17 @@ router.get('/', (req, res) => {
     executeQuery(sql, title ? [title] : [], res, limit, offset);
 });
 
+router.get('/:id', (req, res) => {
+    const {id} = req.params;
+    let sql =
+        "SELECT work.*, philosopher.name AS philosopher " +
+        "FROM work JOIN philosopher " +
+        "ON philosopher.id = work.philosopher_id\n" +
+        "WHERE work.id = CAST($1 AS INTEGER)";
+
+    executeQuery(sql, [id], res,);
+});
+
 router.get('/philosophers', (req, res) => {
 
     let {name} = req.query;

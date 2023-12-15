@@ -14,6 +14,17 @@ router.get('/', (req, res) => {
     executeQuery(sql, [], res, limit, offset);
 });
 
+router.get('/:id', (req, res) => {
+    const {id} = req.params;
+    let sql =
+        "SELECT citation.*, philosopher.name AS philosopher " +
+        "FROM citation JOIN philosopher " +
+        "ON philosopher.id = citation.philosopher_id\n" +
+        "WHERE citation.id = CAST($1 AS INTEGER)";
+
+    executeQuery(sql, [id], res);
+});
+
 router.get('/random', (req, res) => {
     const sql =
         "SELECT citation.*, philosopher.name AS philosopher " +

@@ -1,5 +1,6 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const db = require('./db');
 const cors = require('cors');
 const philosopherRoutes = require('./routes/philosophers');
 const worksRoutes = require('./routes/works');
@@ -30,12 +31,28 @@ app.get('/api', (req, res,) => {
     })
 });
 
+app.get('/update', (req, res) => {
+
+    for(let i = 0; i < 100; i++){
+        db.query(
+            `UPDATE philosopher SET img_url = 'https://philosapi.vercel.app/api/images/' || REPLACE(LOWER(name), ' ', '_' ) || '.jpg'
+             WHERE philosopher.id = ${i};`)
+    }
+
+})
+
 app.use('/api/philosophers', philosopherRoutes);
 app.use('/api/works', worksRoutes);
 app.use('/api/citations', citationsRoutes);
 app.use('/api/stream_of_thought', streamOfThoughtRoutes);
 app.use('/api/periods', periodsRoutes);
-
+app.use((req, res, next) => {
+    res.status(404).send({
+        title: "404 not found",
+        message: "Sorry can't find that!",
+        code: 404
+    })
+})
 app.listen(PORT, (error) => {
     if (!error) {
         console.log(`Server is successfully running, and the app is listening on port ${PORT}`);
